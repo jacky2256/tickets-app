@@ -1,0 +1,47 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    hostname: redis
+    restart: unless-stopped
+    environment:
+      - REDIS_USER=guest
+      - REDIS_PASSWORD=guest
+    command: ["redis-server", "--requirepass", "guest"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "guest", "ping"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/data/:/data
+    networks:
+      - tickets_net
+
+  api:
+    build: .
+    container_name: api
+    restart: unless-stopped
+    command: uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+    expose:
+      - "8000"
+    networks:
+      - tickets_net
+    depends_on:
+      - redis
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - tickets_net
+    depends_on:
+      - api
+
+networks:
+  tickets_net:
+    driver: bridge
