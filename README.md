@@ -82,12 +82,32 @@ If you cannot run the server locally (for example, if your ISP blocks inbound co
       * The header for the city/state column must be named Keyword. 
       * List the states in a single column. 
       * Next to it, include a column named artist with the artist’s name.
+2. **Create a virtual environment:**
+   ```bash
+   python -m venv venv
+   ```
+3. **Activate the virtual environment:**
+   * Linux/Mac:
+   
+   
+      ```bash
+      source venv/bin/activate
+      ```
+   * Windows:
 
-2. **Run the Application:**
+      ```bash
+      venv\Scripts\activate
+      ```
+4. **Install the required dependencies:**
+    ```bash
+      pip install -r requirements.txt
+      ```
+   
+5. **Run the Application:**
     ```bash
    python main.py
    ```
-3. **Review the Output:**
+6. **Review the Output:**
     * After parsing completes, the results will be available in d`ata/out/output.csv`.
 
 ## Configuration
