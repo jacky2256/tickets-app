@@ -16,10 +16,9 @@ class SBDriver:
                     browser='chrome',
                     proxy=proxy,
             ) as sb:
-                sb.time_limit = 20
                 sb.get(url=url)
                 content = sb.get_page_source()
-                time.sleep(5)
+                time.sleep(10)
         except Exception as err:
             logging.error(err)
 
