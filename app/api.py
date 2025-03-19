@@ -2,11 +2,11 @@ import logging
 from pathlib import Path
 
 from fastapi import FastAPI, BackgroundTasks
-from cache import get_keywords_from_redis, set_status_keywords, get_status_keywords
-from logutils import init_logger
-from schemas import EntryKeywords
-from service import MainProcess
-from settings import LOG_DIR
+from app.cache import get_keywords_from_redis, set_status_keywords, get_status_keywords
+from app.logutils import init_logger
+from app.schemas import EntryKeywords
+from app.service import MainProcess
+from app.settings import LOG_DIR
 
 init_logger(filename=str("{}.log".format(Path(__file__).stem)), logdir=str(LOG_DIR))
 

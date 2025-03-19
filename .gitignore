@@ -1,0 +1,73 @@
+# 📌 Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+.Python
+.env
+.venv/
+venv/
+instance/
+.mypy_cache/
+pytest_cache/
+*.log
+logs/
+debug.log
+
+# 📌 Virtual Environment
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 📌 OS-specific files
+.DS_Store
+Thumbs.db
+*.bak
+*.swp
+
+# 📌 Docker
+docker-compose.override.yml
+*.pid
+*.sock
+*.log
+.dockerignore
+docker-compose.yaml~
+Dockerfile~
+nginx/nginx.conf~
+redis/data/
+redis/dump.rdb
+redis/appendonly.aof
+
+# 📌 Selenium & Web Drivers
+downloaded_files/
+chromedriver
+chromedriver.log
+geckodriver
+geckodriver.log
+
+# 📌 FastAPI & Uvicorn
+instance/
+*.db
+*.sqlite3
+alembic/versions/
+
+# 📌 Data files
+data/in/
+data/out/
+data/*.json
+data/*.csv
+data/*.xml
+
+# 📌 VSCode & JetBrains
+.vscode/
+.idea/
+*.iml
+
+
+# 📌 Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd

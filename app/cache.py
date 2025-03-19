@@ -1,5 +1,5 @@
 import redis
-from schemas import OutputKeywords, EntryKeywords, OutputKeyword
+from app.schemas import OutputKeywords, EntryKeywords, OutputKeyword
 
 redis_client = redis.Redis(host="redis", port=6379, db=0, decode_responses=True, username='default', password='guest')
 

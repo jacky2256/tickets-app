@@ -69,10 +69,13 @@ RUN seleniumbase get chromedriver
 #-------------------------------------
 # Copy application files and create a logs directory
 #-------------------------------------
-COPY --chown=seleniumuser:seleniumuser . .
+COPY --chown=seleniumuser:seleniumuser ./app ./app
+COPY --chown=seleniumuser:seleniumuser ./data ./data
+COPY --chown=seleniumuser:seleniumuser ./logs ./logs
+COPY --chown=seleniumuser:seleniumuser first_run.py .
 
 #-------------------------------------
 # Run the application
 #-------------------------------------
 RUN python first_run.py
-CMD ["python", "main.py"]
+#CMD ["python", "main.py"]

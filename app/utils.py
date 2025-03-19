@@ -1,6 +1,6 @@
 import os
 import logging
-from settings import OUT_DIR
+from app.settings import OUT_DIR
 
 
 def save_content_in_file(content: str, directory='output_content',

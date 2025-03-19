@@ -7,10 +7,10 @@ from typing import List, Any
 from parsel import Selector
 from concurrent.futures import ThreadPoolExecutor
 
-from settings import VIVID_THREADS
-from wdm import SBDriver
-from utils import save_content_in_file
-from schemas import OutputKeyword, OutputKeywords
+from app.settings import VIVID_THREADS
+from app.wdm import SBDriver
+from app.utils import save_content_in_file
+from app.schemas import OutputKeyword, OutputKeywords
 
 
 class TickNetSearchPage:
@@ -146,8 +146,6 @@ class TickNetService(TickNetSearchPage, TickNetTicketsPage):
         return result_url
 
 if __name__ == "__main__":
-    from schemas import EntryKeyword
-
     query_1 = "Chicago bibi"
     query_2 = "Boston bibi"
 

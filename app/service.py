@@ -2,11 +2,11 @@
 # import openpyxl
 # from typing import List, Dict
 import logging
-from schemas import EntryKeywords
-from cache import update_keywords_in_redis, save_keywords_to_redis, delete_all_keywords_from_redis, set_status_keywords
+from app.schemas import EntryKeywords
+from app.cache import update_keywords_in_redis, save_keywords_to_redis, delete_all_keywords_from_redis, set_status_keywords
 # from settings import XLSX_FILE_PATH
-from vivid_service.vivid_parser import VividService
-from ticket_net_service.ticket_net_parser import TickNetService
+from app.vivid_service.vivid_parser import VividService
+from app.ticket_net_service.ticket_net_parser import TickNetService
 
 class MainProcess:
     @staticmethod

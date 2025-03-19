@@ -4,10 +4,12 @@ import urllib.parse
 from parsel import Selector
 from concurrent.futures import ThreadPoolExecutor
 
-from settings import VIVID_THREADS
-from wdm import SBDriver
-from utils import save_content_in_file
-from schemas import EntryKeywords, OutputKeyword, OutputKeywords
+from app.settings import VIVID_THREADS
+from app.wdm import SBDriver
+from app.utils import save_content_in_file
+from app.schemas import EntryKeywords, OutputKeyword, OutputKeywords
+
+logger = logging.getLogger(__name__)
 
 class VividSearchPage:
     BASE_URL = "https://www.vividseats.com"
@@ -124,14 +126,36 @@ class VividService(VividSearchPage, VividTicketPage):
 
 
 if __name__ == "__main__":
-    from schemas import EntryKeyword
+    from app.schemas import EntryKeyword
 
     query_1 = "Chicago bibi"
     query_2 = "Boston bibi"
+    query_3 = "Atlanta bibi"
+    query_4 = "Irving bibi"
+    query_5 = "Oakland bibi"
+    query_6 = "Seattle bibi"
+    query_7 = "National Harbor bibi"
+    query_8 = "Inglewood bibi"
+    query_9 = "New York bibi"
+    query_10 = "Toronto bibi"
 
     keyword_1 = EntryKeyword(id=0, name=query_1)
     keyword_2 = EntryKeyword(id=1, name=query_2)
-    entries_ = EntryKeywords(keywords=[keyword_1, keyword_2])
+    keyword_3 = EntryKeyword(id=2, name=query_3)
+    keyword_4 = EntryKeyword(id=3, name=query_4)
+    keyword_5 = EntryKeyword(id=4, name=query_5)
+    keyword_6 = EntryKeyword(id=5, name=query_6)
+    keyword_7 = EntryKeyword(id=6, name=query_7)
+    keyword_8 = EntryKeyword(id=7, name=query_8)
+    keyword_9 = EntryKeyword(id=8, name=query_9)
+    keyword_10 = EntryKeyword(id=9, name=query_10)
+
+    entries_ = EntryKeywords(keywords=[
+        keyword_1, keyword_2, keyword_3,
+        keyword_4, keyword_5, keyword_6,
+        keyword_7, keyword_8, keyword_9,
+        keyword_10
+    ])
 
     vivid_service = VividService()
     results = vivid_service.process(entries_)

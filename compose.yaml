@@ -21,7 +21,11 @@ services:
     build: .
     container_name: api
     restart: unless-stopped
-    command: uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.api:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./app:/home/seleniumuser/workdir/app
+      - ./data:/home/seleniumuser/workdir/data
+      - ./logs:/home/seleniumuser/workdir/logs
     expose:
       - "8000"
     networks:
