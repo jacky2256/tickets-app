@@ -8,7 +8,7 @@ OUT_DIR = BASE_DIR / "data/out"
 INPUT_CSV_FILE_PATH = BASE_DIR / "data/in/base.csv"
 OUTPUT_CSV_FILE_PATH = BASE_DIR / "data/out/output.csv"
 PROXIES_FILE_PATH = BASE_DIR / "data/in/proxies.txt"
+MAX_FAILURES_PER_ONE_PROXY = 5
 
 USE_PROXY = False
-MAX_FAILURES_PER_ONE_PROXY = 5
 THREADS = 2
