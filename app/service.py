@@ -1,10 +1,8 @@
-# import os
-# import openpyxl
-# from typing import List, Dict
 import logging
 from app.schemas import EntryKeywords
 from app.cache import update_keywords_in_redis, save_keywords_to_redis, delete_all_keywords_from_redis, set_status_keywords
-# from settings import XLSX_FILE_PATH
+from app.utils import read_csv_to_entry_keywords, save_output_keywords_to_csv
+from settings import INPUT_CSV_FILE_PATH, OUTPUT_CSV_FILE_PATH
 from app.vivid_service.vivid_parser import VividService
 from app.ticket_net_service.ticket_net_parser import TickNetService
 
@@ -27,44 +25,37 @@ class MainProcess:
             set_status_keywords(False)
             logging.info("END PROCESSING!")
 
-# class FileReaderService:
-#
-#     def process_ser(self):
-#         try:
-#             file_path = str(XLSX_FILE_PATH.absolute())
-#             self.read_event_data_from_xlsx(file_path)
-#         except Exception as err:
-#             logging.error(err)
-#
-#     @staticmethod
-#     def read_event_data_from_xlsx(file_path: str) -> List[Dict[str, str]]:
-#         """
-#         Считывает данные из XLSX-файла, начиная с 5-й строки, и возвращает список словарей.
-#         """
-#         START_NUM_CELL = 5
-#         HEADERS = [
-#             "Event Date", "Presale Date", "Presale Time (EST)", "Presale Type", "City", "State", "Venue",
-#             "Capacity", "Min Price (Vivid)", "Min Price (Ticket Network)", "Min Cost", "Max Cost"
-#         ]
-#
-#         workbook = openpyxl.load_workbook(file_path, data_only=True)
-#         sheet = workbook.active
-#         event_data = []
-#
-#         for row in sheet.iter_rows(min_row=START_NUM_CELL, max_row=sheet.max_row, values_only=True):
-#             if all(cell is None for cell in row):
-#                 continue
-#             row_data = {header: (str(value) if value is not None else "N/A") for header, value in zip(HEADERS, row)}
-#             event_data.append(row_data)
-#
-#         workbook.close()
-#         return event_data
+class FileReaderService:
+    def __init__(self):
+        logging.info("PROGRAM IS STARTING...")
+        logging.info(f"Your results will save in {OUTPUT_CSV_FILE_PATH.absolute()}")
+
+    def __del__(self):
+        logging.info("PROGRAM FINISHED!")
+
+    def process_ser(self):
+        try:
+            file_path = str(INPUT_CSV_FILE_PATH.absolute())
+            output_file_path = str(OUTPUT_CSV_FILE_PATH.absolute())
+
+            entries = read_csv_to_entry_keywords(file_path)
+            if entries is None:
+                logging.error("CSV FILE IS EMPTY!")
+                return
+
+            vivid_service = VividService()
+            results_vivid = vivid_service.process(entries)
+
+            ticket_net_service = TickNetService()
+            results_ticket_net = ticket_net_service.process(results_vivid)
+            is_saved_correct = save_output_keywords_to_csv(results_ticket_net, output_file_path)
+            if is_saved_correct:
+                logging.info(f"Data saved in {output_file_path}")
+        except Exception as err:
+            logging.error(err)
 
 
-# if __name__ == '__main__':
-#     file_path = str(XLSX_FILE_PATH.absolute())
-#     print(file_path)
-#     service = FileReaderService()
-#     results = service.read_event_data_from_xlsx(file_path)
-#     for i in results:
-#         print(i)
+
+if __name__ == '__main__':
+    servier = FileReaderService()
+    servier.process_ser()

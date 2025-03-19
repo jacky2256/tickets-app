@@ -7,9 +7,10 @@ from typing import List, Any
 from parsel import Selector
 from concurrent.futures import ThreadPoolExecutor
 
-from app.settings import VIVID_THREADS
+from app.proxy_manager import ProxyManager
+from app.settings import THREADS, USE_PROXY
 from app.wdm import SBDriver
-from app.utils import save_content_in_file
+from app.utils import save_content_in_file, import_proxies
 from app.schemas import OutputKeyword, OutputKeywords
 
 
@@ -57,13 +58,15 @@ class TickNetTicketsPage:
 class TickNetService(TickNetSearchPage, TickNetTicketsPage):
     def __init__(self):
         super().__init__()
+        self.use_proxy = USE_PROXY
+        self.prxm = ProxyManager(import_proxies())
 
     def process(self, entries: OutputKeywords) -> OutputKeywords:
         results = OutputKeywords(keywords=[])
 
         try:
             keywords = entries.keywords
-            with ThreadPoolExecutor(max_workers=VIVID_THREADS) as executor:
+            with ThreadPoolExecutor(max_workers=THREADS) as executor:
                 processed_keywords = executor.map(lambda keyword: OutputKeyword(
                     id=keyword.id,
                     name=keyword.name,
@@ -106,11 +109,12 @@ class TickNetService(TickNetSearchPage, TickNetTicketsPage):
             logging.error(err)
         return min_price
 
-    @staticmethod
-    def fetch_content(url: str) -> str:
+    def fetch_content(self, url: str) -> str:
         result_content = ''
+        proxy = None
         try:
-            proxy = "socks5://156.239.60.140:1080"
+            if self.use_proxy:
+                proxy = self.prxm.get_proxy()
             result_content = SBDriver().fetch_content(url, proxy=proxy)
         except Exception as err:
             logging.error(err)
