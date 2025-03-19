@@ -2,7 +2,7 @@ import logging
 from app.schemas import EntryKeywords
 from app.cache import update_keywords_in_redis, save_keywords_to_redis, delete_all_keywords_from_redis, set_status_keywords
 from app.utils import read_csv_to_entry_keywords, save_output_keywords_to_csv
-from settings import INPUT_CSV_FILE_PATH, OUTPUT_CSV_FILE_PATH
+from app.settings import INPUT_CSV_FILE_PATH, OUTPUT_CSV_FILE_PATH
 from app.vivid_service.vivid_parser import VividService
 from app.ticket_net_service.ticket_net_parser import TickNetService
 
