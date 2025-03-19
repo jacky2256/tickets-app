@@ -81,7 +81,7 @@ class VividService(VividSearchPage, VividTicketPage):
             url = self.generate_search_url(query)
             logging.info(f"Vivid search url: {url}")
             content_search_url = self.fetch_content(url)
-            save_content_in_file(content_search_url, filename=f"{query}_search.html")
+            save_content_in_file(content_search_url, filename=f"{query}_v_search.html")
 
             if content_search_url:
                 selector = Selector(content_search_url)
@@ -89,7 +89,7 @@ class VividService(VividSearchPage, VividTicketPage):
                 logging.info(f"Vivid ticket link: {ticket_link}")
                 if ticket_link:
                     content_ticket_url = self.fetch_content(ticket_link)
-                    save_content_in_file(content_ticket_url, filename=f"{query}_ticket.html")
+                    save_content_in_file(content_ticket_url, filename=f"{query}_v_ticket.html")
                     selector = Selector(content_ticket_url)
                     min_max_price_text = self.extract_low_price(selector)
                     logging.info(f"Vivid ticket text price: {min_max_price_text}")

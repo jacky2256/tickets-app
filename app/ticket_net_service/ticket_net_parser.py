@@ -87,7 +87,7 @@ class TickNetService(TickNetSearchPage, TickNetTicketsPage):
             url = self.generate_search_url(query)
             logging.info(f"Ticket Net search url: {url}")
             content_search_url = self.fetch_content(url)
-            save_content_in_file(content_search_url, filename=f"{query}_search.html")
+            save_content_in_file(content_search_url, filename=f"{query}_tn_search.html")
 
             if content_search_url:
                 selector = Selector(content_search_url)
@@ -97,7 +97,7 @@ class TickNetService(TickNetSearchPage, TickNetTicketsPage):
                 logging.info(f"Ticket Net ticket link: {ticket_link}")
                 if ticket_link:
                     content_ticket_url = self.fetch_content(ticket_link)
-                    save_content_in_file(content_ticket_url, filename=f"{query}_ticket.html")
+                    save_content_in_file(content_ticket_url, filename=f"{query}_tn_ticket.html")
                     selector = Selector(content_ticket_url)
                     min_price_text = self.extract_low_price(selector)
                     logging.info(f"Ticket Net ticket text price: {min_price_text}")
