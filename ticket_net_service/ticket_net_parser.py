@@ -11,7 +11,6 @@ from settings import VIVID_THREADS
 from wdm import SBDriver
 from utils import save_content_in_file
 from schemas import OutputKeyword, OutputKeywords
-from cache import update_keywords_in_redis
 
 
 class TickNetSearchPage:
@@ -74,7 +73,6 @@ class TickNetService(TickNetSearchPage, TickNetTicketsPage):
 
             results.keywords.extend(processed_keywords)
 
-            update_keywords_in_redis(results)
         except Exception as err:
             logging.error(f"Error in process method: {err}")
 
