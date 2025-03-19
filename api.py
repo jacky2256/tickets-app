@@ -21,12 +21,15 @@ def read_root():
 async def start_service(entries: EntryKeywords, background_tasks: BackgroundTasks):
     try:
         logging.info(f"Received request: {entries}")
+        vivid_status = get_status_keywords()
+        if vivid_status == False:
+            set_status_keywords(True)
+            service = MainProcess()
+            background_tasks.add_task(service.process_ser, entries)
 
-        set_status_keywords(True)
-        service = MainProcess()
-        background_tasks.add_task(service.process_ser, entries)
-
-        return {"status": "Processing started"}
+            return {"status": "Processing started"}
+        else:
+            return {"status": "Processing already started"}
     except Exception as err:
         logging.error(f"Error starting vivid service: {err}")
         return {"status": "Failed to start processing"}

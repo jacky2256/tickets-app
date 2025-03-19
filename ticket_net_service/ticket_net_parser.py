@@ -82,7 +82,7 @@ class TickNetService(TickNetSearchPage, TickNetTicketsPage):
         min_price = 0
         try:
             url = self.generate_search_url(query)
-            logging.info(f"Vivid search url: {url}")
+            logging.info(f"Ticket Net search url: {url}")
             content_search_url = self.fetch_content(url)
             save_content_in_file(content_search_url, filename=f"{query}_search.html")
 
@@ -91,16 +91,16 @@ class TickNetService(TickNetSearchPage, TickNetTicketsPage):
                 ticket_list_string = self.extract_ticket_link(selector)
                 ticket_list = self.parse_json_string_to_list(ticket_list_string)
                 ticket_link = self.extract_first_url(ticket_list)
-                logging.info(f"Vivid ticket link: {ticket_link}")
+                logging.info(f"Ticket Net ticket link: {ticket_link}")
                 if ticket_link:
                     content_ticket_url = self.fetch_content(ticket_link)
                     save_content_in_file(content_ticket_url, filename=f"{query}_ticket.html")
                     selector = Selector(content_ticket_url)
                     min_price_text = self.extract_low_price(selector)
-                    logging.info(f"Vivid ticket text price: {min_price_text}")
+                    logging.info(f"Ticket Net ticket text price: {min_price_text}")
                     if min_price_text:
                         min_price = self.extr_price_from_str(min_price_text)
-                        logging.info(f"Vivid ticket price: {min_price}")
+                        logging.info(f"Ticket Net ticket price: {min_price}")
 
         except Exception as err:
             logging.error(err)
