@@ -79,9 +79,9 @@ If you cannot run the server locally (for example, if your ISP blocks inbound co
 
     * Create a file at data/in/base.csv with the necessary columns.
     * Important:
-      * The header for the city/state column must be named Keyword. 
-      * List the states in a single column. 
-      * Next to it, include a column named artist with the artist’s name.
+      * The header for the city/state/venue or other tiles column must be named `Keyword`. 
+      * List the city/states/venue or other titles in a single column. 
+      * Next to it, include a column named `artist` with the artist’s name.
 2. **Create a virtual environment:**
    ```bash
    python -m venv venv
